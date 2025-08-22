@@ -1,6 +1,16 @@
-# Arecanut Disease Detection Datasets
+# Arecanut Disease Detection Datasets & Images
 
-This directory contains datasets for training your heterogeneous deep learning framework.
+This directory contains datasets and sample images for training your heterogeneous deep learning framework.
+
+## 🖼️ Sample Images Generated ✅
+
+### Arecanut Disease Sample Images (640x640px)
+- **`sample_images/arecanut_healthy.jpg`** - Healthy arecanut palm with green fruits
+- **`sample_images/arecanut_fruit_rot.jpg`** - Fruit rot disease (Phytophthora infection)
+- **`sample_images/arecanut_leaf_spot.jpg`** - Leaf spot disease with fungal symptoms
+- **`sample_images/arecanut_stem_bleeding.jpg`** - Stem bleeding disease (Ganoderma)
+- **`sample_images/arecanut_bud_rot.jpg`** - Bud rot with wilted crown symptoms
+- **`sample_images/arecanut_koleroga.jpg`** - Koleroga disease on nuts
 
 ## ✅ Already Downloaded
 
@@ -71,6 +81,31 @@ unzip downsampled-plant-disease-dataset.zip
 import os
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import cv2
+import numpy as np
+
+def load_arecanut_sample_images():
+    """Load generated sample images for initial testing"""
+    
+    sample_images = [
+        "datasets/sample_images/arecanut_healthy.jpg",
+        "datasets/sample_images/arecanut_fruit_rot.jpg", 
+        "datasets/sample_images/arecanut_leaf_spot.jpg",
+        "datasets/sample_images/arecanut_stem_bleeding.jpg",
+        "datasets/sample_images/arecanut_bud_rot.jpg",
+        "datasets/sample_images/arecanut_koleroga.jpg"
+    ]
+    
+    labels = ['healthy', 'fruit_rot', 'leaf_spot', 'stem_bleeding', 'bud_rot', 'koleroga']
+    
+    images = []
+    for img_path in sample_images:
+        img = cv2.imread(img_path)
+        img = cv2.resize(img, (224, 224))
+        img = img / 255.0  # Normalize
+        images.append(img)
+    
+    return np.array(images), labels
 
 def load_plant_disease_data():
     """Load the downsampled plant disease dataset"""
@@ -122,6 +157,7 @@ print(f"Validation samples: {val_data.samples}")
 
 | Dataset | Size | Images | Classes | Best For |
 |---------|------|--------|---------|----------|
+| **Sample Images** | **640KB** | **6** | **6** | **Initial testing & prototyping** |
 | Downsampled Plant Disease | Small | ~2,000 | 15+ | Quick testing |
 | PlantVillage | 2.5GB | 54,000+ | 38 | Main training |
 | New Plant Diseases | Large | 70,000+ | 38 | Enhanced training |
